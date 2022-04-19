@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Thong tin Sinh Vien</h2>
+
+<form action="/FileStudent/Index" method="post" enctype="multipart/form-data">
+    <p>Ma hoc vien</p>
+    <input name="Id" value="@ViewBag.Id" />
+
+    <p>Ho va ten</p>
+    <input name="Name" value="@ViewBag.Name" />
+
+    <p>Gioi tinh</p>
+    <input name="Sex" value="@ViewBag.Sex" />
+
+    <p>Ngay sinh</p>
+    <input name="Date" value="@ViewBag.Date" />
+
+    <p>Hoc phi</p>
+    <input name="Fee" value="@ViewBag.Fee" />
+
+    <p>Hinh</p>
+    <input type="file" name="image" />
+    <img src="~/Content/UploadFiles/@ViewBag.FileName" alt="@ViewBag.FileName" />
+
+    <p>Ghi chu</p>
+    <textarea name="Note">@ViewBag.Note</textarea>
+
+    <br />
+    <input type="submit" name="action" value="Save" />
+    <input type="submit" name="action" value="Open" />
+</form>
+

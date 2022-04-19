@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Upload";
+}
+
+<h2>Upload</h2>
+
+<form action="/FileUpload/Upload" method="post" enctype="multipart/form-data">
+    <div>Hinh anh</div>
+    <input name="image" type="file" />
+    <img src="~/UploadFiles/@ViewBag.FileName" alt="@ViewBag.FileName" />
+    <div>Tai lieu</div>
+    <input name="document" type="file" />
+    <p>@ViewBag.Content</p>
+    <p>@ViewBag.FileType</p>
+    <p>@ViewBag.FileSize</p>
+    <hr />
+
+    <input type="submit" value="upload" />
+</form>
+

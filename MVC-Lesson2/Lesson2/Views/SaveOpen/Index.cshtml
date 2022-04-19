@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Save";
+}
+
+<h2>Doc/ghi flie</h2>
+
+<form action="/SaveOpen/Index" method="post">
+
+    <p>Ma sinh vien</p>
+    <input name="Id" value="@ViewBag.Id" />
+
+    <p>Ho ten</p>
+    <input name="Name" value="@ViewBag.Name" />
+
+    <p>Diem Trung Binh</p>
+    <input name="Marks" value="@ViewBag.Marks" />
+
+    <hr />
+    <input type="submit" name="action" value="Luu" />
+    <input type="submit" name="action" value="Mo" />
+    <p>@ViewBag.Message</p>
+</form>

@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Send";
+}
+
+<h2>Send email with attachment</h2>
+
+<form action="/MailAttachFile/Send" method="post" enctype="multipart/form-data">
+    <p>From:</p>
+    <input name="From" />
+
+    <p>To:</p>
+    <input name="To" />
+
+    <p>Subject:</p>
+    <input name="Subject" />
+
+    <p>Attchment:</p>
+    <input name="attach" type="file" />
+    <p>@ViewBag.FileName</p>
+
+    <p>Notes:</p>
+    <textarea name="Body"></textarea>
+    <br />
+    <input type="submit" value="Send" />
+</form>
+
+

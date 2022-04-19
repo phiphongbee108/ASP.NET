@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<form>
+    <input type="number" name="a" placeholder="toan hang a"/>
+
+    <select name="o">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
+
+    <input type="number" name="b" placeholder="toan hang b" />
+
+    <input type="submit" value="=" />
+
+    <input type="number" value="@ViewBag.KetQua" placeholder="ket qua" />
+</form>
+
