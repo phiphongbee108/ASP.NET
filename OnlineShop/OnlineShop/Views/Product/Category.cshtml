@@ -1,0 +1,95 @@
+﻿@model List<OnlineShop.Models.EF.Product>
+@{
+    var category = (OnlineShop.Models.EF.ProductCategory)ViewBag.Category;
+    ViewBag.Title = category.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section slide{
+    <div class="header_slide">
+        <div class="header_bottom_left">
+            <div class="categories">
+                @{ Html.RenderAction("ProductCategory", "Product"); }
+            </div>
+        </div>
+        <div class="header_bottom_right">
+            @{ Html.RenderAction("Slide", "Home"); }
+        </div>
+        <div class="clear"></div>
+    </div>
+}
+<div class="content">
+    <div class="content_top">
+        <div class="heading">
+            <h3>@category.Name</h3>
+        </div>
+        <div class="see">
+            <p><a href="#">See all Products</a></p>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        @foreach (var item in Model)
+        {
+            var url = "/detail/" + item.MetaTitle + "-" + item.ID;
+            <div class="grid_1_of_4 images_1_of_4">
+                <a href="@url"><img src="@item.Image" alt="" /></a>
+                <h2>@item.Name</h2>
+                <div class="price-details">
+                    <div class="price-number">
+                        <p><span class="rupees">$ @(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Contact")</span></p>
+                    </div>
+                    <div class="add-cart">
+                        <h4><a href="/add-to-cart?productID=@item.ID&quantity=1">Add to Cart</a></h4>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        }
+        <div class="clear"></div>
+        @if (ViewBag.TotalPage > 1)
+        {
+            var pageDisplay = (int)ViewBag.MaxPage;
+            int totalPage = (int)ViewBag.TotalPage;
+            int currentPage = ((int)ViewBag.Page);
+
+            var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+            var endPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+
+            var url = "/product/" + category.MetaTitle + "-" + category.ID;
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    @if (currentPage > ViewBag.First)
+                    {
+                        <li class="page-item"><a href="@url?page=@ViewBag.First" title="First Page" class="first page-link"><i class="fa fa-angle-double-left"></i></a></li>
+                        <li class="page-item">
+                            <a href="@url?page=@ViewBag.Prev" title="Previous Page" class="prev page-link"><i class="fa fa-angle-left"></i></a>
+                        </li>
+
+                    }
+                    @for (int i = startPageIndex; i <= endPageIndex; i++)
+                    {
+                        if (currentPage == i)
+                        {
+
+                            <li class="page-item"> <a href="@url?page=@i" class="active page-link" title="Page @i">@i</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item"><a href="@url?page=@i" title="Page @i" class="pos page-link">@i</a></li>
+                        }
+                    }
+                    @if (currentPage < totalPage)
+                    {
+                        <li class="page-item"><a href="@url?page=@ViewBag.Next" class="next page-link" title="Next Page"><i class="fa fa-angle-right"></i></a></li>
+                        <li class="page-item"> <a href="@url?page=@ViewBag.Last" class="last page-link" title="Last Page"><i class="fa fa-angle-double-right"></i></a></li>
+                    }
+
+                </ul>
+            </nav>
+        }
+        else
+        {
+            <p>No more page</p>
+        }
+    </div>
+</div>

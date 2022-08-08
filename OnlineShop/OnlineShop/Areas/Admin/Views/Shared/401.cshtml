@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    @section header 
+    {
+        Unauthorize Error!
+    }
+    <div class="alert alert-danger">
+        <p>No access to the website!</p>
+        <p><a href="/Admin/Home" class="btn btn-outline-primary">Go Back</a></p>
+    </div>
+</body>
+</html>

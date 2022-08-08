@@ -1,0 +1,102 @@
+﻿@model PagedList.IPagedList<OnlineShop.Models.EF.User>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header {
+    <h2>User List</h2>
+}
+
+@section jsFooter {
+    <script src="~/assets/admin/js/controller/userController.js"></script>
+}
+
+<div class="container-fluid">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 row justify-content-around">
+            <!-- Topbar Search -->
+            @using (Html.BeginForm(
+                                    "Index",
+                                    "User",
+                                    FormMethod.Get,
+                                    new { @class = "d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search w-50" }
+                                   ))
+            {
+                <div class="input-group">
+                    <input type="text" name="searchString" class="form-control bg-light border-0 small"
+                           placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"
+                           value="@ViewBag.SearchString">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            }
+            <a href="/Admin/User/Create" class="btn btn-outline-primary">Add User</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th class="text-center">#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr id="row_@item.ID">
+                            <td>@item.ID</td>
+                            <td>@item.UserName</td>
+                            <td>@item.Password</td>
+                            <td>@item.GroupID</td>
+                            <td>
+                                <a href="#" class="btn-active" data-id="@item.ID">
+                                    @(item.Status ? "Enable" : "Locked")
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="/Admin/User/Edit/@item.ID">Edit</a>
+                                |
+                                @Ajax.ActionLink(
+                                                 "Delete",
+                                                 "Delete",
+                                                 new
+                                                 {
+                                                     @id = item.ID
+                                                 },
+                                                 new AjaxOptions
+                                                 {
+                                                     Confirm = "Are you sure to delete this account?",
+                                                     OnComplete = "$('#row_" + @item.ID + "').remove()",
+                                                     HttpMethod = "Delete"
+                                                 }
+                                                )
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="float-right">
+                    @Html.PagedListPager(
+                                         Model,
+                                         page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }),
+                                         new PagedListRenderOptions { LiElementClasses = new List<string> { "page-link" } }
+                                        )
+                    <br />
+                    <a href="/Admin/Home" class="btn btn-outline-primary">Go Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

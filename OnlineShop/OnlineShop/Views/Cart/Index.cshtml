@@ -1,0 +1,64 @@
+﻿@model List<OnlineShop.Models.CartItem>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section jsFooter {
+    <script src="~/assets/client/js/controller/cartController.js"></script>
+}
+
+<div class="content">
+    <div class="section group">
+        @if (Model.Count > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr class="d-flex">
+                        <th class="col-1">ID</th>
+                        <th class="col-3">Name</th>
+                        <th class="col-3">Image</th>
+                        <th class="col-2">Quantity</th>
+                        <th class="col-1">Price</th>
+                        <th class="col-1">Total</th>
+                        <th class="col-1">#</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {                      
+                        <tr class="d-flex">
+                            <td class="col-1">@item.Product.ID</td>
+                            <td class="col-3">@item.Product.Name</td>
+                            <td class="col-3"><img src="@item.Product.Image" class="w-100" /></td>
+                            <td class="col-2">
+                                <input type="text" class="quantity w-50" data-id="@item.Product.ID" value="@item.Quantity" />
+                                <a href="#" class="plus" data-id="@item.Product.ID">+</a>
+                                |
+                                <a href="#" class="minus" data-id="@item.Product.ID">-</a>
+                            </td>
+                            <td class="col-1">@item.Product.Price.GetValueOrDefault(0).ToString("N0") $</td>
+                            <td class="col-1">@((item.Product.Price.GetValueOrDefault(0) * item.Quantity).ToString("N0")) $</td>
+                            <td class="col-1">
+                                <a href="#" class="btn-delete" data-id="@item.Product.ID">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <button id="btnContinue" class="btn btn-outline-primary">Continue Buy</button>
+            <button id="btnUpdate" class="btn btn-outline-warning">Update Quantity</button>
+            <button id="btnDeleteAll" class="btn btn-outline-danger">Delete All Item</button>
+            <button id="btnPayment" class="btn btn-outline-success">Payment</button>
+        }
+        else
+        {
+            <p class="alert alert-danger">Cart has no item!</p>
+        }
+    </div>
+</div>
+
+

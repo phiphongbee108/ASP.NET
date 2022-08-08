@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content">
+    <div class="section group">
+        @if (Model.Count > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr class="d-flex">
+                        <th class="col-1">ID</th>
+                        <th class="col-3">Name</th>
+                        <th class="col-3">Image</th>
+                        <th class="col-2">Quantity</th>
+                        <th class="col-2">Price</th>
+                        <th class="col-1">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr class="d-flex">
+                        <td class="col-1">@item.Product.ID</td>
+                        <td class="col-3">@item.Product.Name</td>
+                        <td class="col-3"><img src="@item.Product.Image" class="w-100" /></td>
+                        <td class="col-2">@item.Quantity</td>
+
+                        @*<td class="col-1">@item.Product.Price.GetValueOrDefault(0).ToString("N0") $</td>
+                        <td class="col-1">@((item.Product.Price.GetValueOrDefault(0) * item.Quantity).ToString("N0")) $</td>*@
+
+                        <td class="col-2">@item.Product.Price.ToString("N0") $</td>
+                        <td class="col-1">@((item.Product.Price * item.Quantity).ToString("N0")) $</td>                        
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+
+    <div class="section group">
+        <div class="col-md-6">
+            <h2>Customer Info</h2>
+            @using(Html.BeginForm("Payment", "Cart", FormMethod.Post))
+            {
+            <div class="form-group">
+                <label>Receiver</label>
+                <input name="shipName" class="form-control" />
+                <label>Phone</label>
+                <input name="mobile" class="form-control" />
+                <label>Address</label>
+                <input name="address" class="form-control" />
+                <label>Email</label>
+                <input name="email" class="form-control" />
+                <button type="submit" class="btn btn-outline-primary">Submit</button>
+                <a href="/Cart" class="btn btn-outline-primary">Back to Cart</a>
+            </div>
+            }
+        </div>
+    </div>
+</div>
